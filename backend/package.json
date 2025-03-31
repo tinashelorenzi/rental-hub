@@ -1,0 +1,40 @@
+{
+  "name": "rental-hub-backend",
+  "version": "1.0.0",
+  "description": "A comprehensive property management platform backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "property",
+    "management",
+    "rental",
+    "adminjs",
+    "express",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@adminjs/express": "^5.0.0",
+    "adminjs": "^6.8.7",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^3.2.0",
+    "sequelize": "^6.31.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22"
+  }
+}
