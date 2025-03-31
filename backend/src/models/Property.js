@@ -79,6 +79,28 @@ const Property = sequelize.define('Property', {
       key: 'id'
     }
   }
+}, {
+  tableName: 'Properties',
+  timestamps: true,
+  underscored: true
 });
+
+// Define associations
+Property.associate = (models) => {
+  Property.belongsTo(models.User, {
+    foreignKey: 'ownerId',
+    as: 'owner'
+  });
+
+  Property.hasMany(models.Lease, {
+    foreignKey: 'propertyId',
+    as: 'leases'
+  });
+
+  Property.hasMany(models.Maintenance, {
+    foreignKey: 'propertyId',
+    as: 'maintenanceRequests'
+  });
+};
 
 module.exports = Property; 

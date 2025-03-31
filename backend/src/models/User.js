@@ -57,22 +57,66 @@ const User = sequelize.define('User', {
     }
   }
 }, {
+  tableName: 'Users',
+  timestamps: true,
+  underscored: true,
   hooks: {
     beforeCreate: async (user) => {
       if (user.password) {
-        user.password = await bcrypt.hash(user.password, 10);
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
       }
     },
     beforeUpdate: async (user) => {
       if (user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
       }
     }
   }
 });
 
+// Instance methods
 User.prototype.validatePassword = async function(password) {
-  return bcrypt.compare(password, this.password);
+  try {
+    if (!this.password) {
+      console.error('No password hash found for user');
+      return false;
+    }
+    return await bcrypt.compare(password, this.password);
+  } catch (error) {
+    console.error('Error validating password:', error);
+    return false;
+  }
+};
+
+// Define associations
+User.associate = (models) => {
+  User.hasMany(models.Property, {
+    foreignKey: 'ownerId',
+    as: 'properties'
+  });
+
+  User.hasMany(models.Maintenance, {
+    foreignKey: 'reportedBy',
+    as: 'reportedMaintenance'
+  });
+
+  User.hasMany(models.Maintenance, {
+    foreignKey: 'assignedTo',
+    as: 'assignedMaintenance'
+  });
+
+  // Self-referential relationship for company hierarchy
+  User.belongsTo(User, {
+    foreignKey: 'parentId',
+    as: 'parent'
+  });
+
+  User.hasMany(User, {
+    foreignKey: 'parentId',
+    as: 'children'
+  });
 };
 
 module.exports = User; 

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "create-admin": "node src/scripts/createAdmin.js"
   },
   "keywords": [
     "property",
@@ -19,7 +20,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@adminjs/express": "^5.0.0",
+    "@adminjs/express": "^5.1.0",
+    "@adminjs/sequelize": "^3.0.0",
     "adminjs": "^6.8.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -36,5 +38,8 @@
   "devDependencies": {
     "jest": "^29.5.0",
     "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=16.0.0 <19.0.0"
   }
 }
